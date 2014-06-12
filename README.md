@@ -31,5 +31,8 @@ To get started and run the example, simply:
 
 Just replace YOUR_API_KEY with your 40 character API key from AlchemyAPI, and you should be good to go.
 
-	
-	
+It is also possible to pass the API key into the constructor:
+
+	from alchemyapi import AlchemyAPI
+	client = AlchemyAPI(YOUR_API_KEY)
+	response = client.entities('text', demo_text, { 'sentiment':1 })
