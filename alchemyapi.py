@@ -719,7 +719,7 @@ class AlchemyAPI:
         params['outputMode'] = 'json'
         # Insert the base url
 
-        post_url = AlchemyAPI.BASE_URL + endpoint + '?' + urlencode(params).encode('utf-8')
+        post_url = AlchemyAPI.BASE_URL + endpoint + '?' + urlencode(params)
 
         try:
             results = self.s.post(url=post_url, data=post_data)
