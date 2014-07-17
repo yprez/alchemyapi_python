@@ -31,7 +31,7 @@ except ImportError:
 try:
     import json
 except ImportError:
-    #Older versions of Python (i.e. 2.4) require simplejson instead of json
+    # Older versions of Python (i.e. 2.4) require simplejson instead of json
     import simplejson as json
 
 
@@ -49,8 +49,8 @@ if __name__ == '__main__':
     """
     if len(sys.argv) == 2 and sys.argv[1]:
         if len(sys.argv[1]) == 40:
-            #write the key to the file
-            f = open('api_key.txt','w')
+            # write the key to the file
+            f = open('api_key.txt', 'w')
             f.write(sys.argv[1])
             f.close()
             print('Key: ' + sys.argv[1] + ' was written to api_key.txt')
@@ -64,7 +64,7 @@ class APIKeyException(Exception):
 
 
 class AlchemyAPI:
-    #Setup the endpoints
+    # Setup the endpoints
     ENDPOINTS = {}
     ENDPOINTS['sentiment'] = {}
     ENDPOINTS['sentiment']['url'] = '/url/URLGetTextSentiment'
@@ -90,31 +90,31 @@ class AlchemyAPI:
     ENDPOINTS['entities']['text'] = '/text/TextGetRankedNamedEntities'
     ENDPOINTS['entities']['html'] = '/html/HTMLGetRankedNamedEntities'
     ENDPOINTS['category'] = {}
-    ENDPOINTS['category']['url']  = '/url/URLGetCategory'
+    ENDPOINTS['category']['url'] = '/url/URLGetCategory'
     ENDPOINTS['category']['text'] = '/text/TextGetCategory'
     ENDPOINTS['category']['html'] = '/html/HTMLGetCategory'
     ENDPOINTS['relations'] = {}
-    ENDPOINTS['relations']['url']  = '/url/URLGetRelations'
+    ENDPOINTS['relations']['url'] = '/url/URLGetRelations'
     ENDPOINTS['relations']['text'] = '/text/TextGetRelations'
     ENDPOINTS['relations']['html'] = '/html/HTMLGetRelations'
     ENDPOINTS['language'] = {}
-    ENDPOINTS['language']['url']  = '/url/URLGetLanguage'
+    ENDPOINTS['language']['url'] = '/url/URLGetLanguage'
     ENDPOINTS['language']['text'] = '/text/TextGetLanguage'
     ENDPOINTS['language']['html'] = '/html/HTMLGetLanguage'
     ENDPOINTS['text'] = {}
-    ENDPOINTS['text']['url']  = '/url/URLGetText'
+    ENDPOINTS['text']['url'] = '/url/URLGetText'
     ENDPOINTS['text']['html'] = '/html/HTMLGetText'
     ENDPOINTS['text_raw'] = {}
-    ENDPOINTS['text_raw']['url']  = '/url/URLGetRawText'
+    ENDPOINTS['text_raw']['url'] = '/url/URLGetRawText'
     ENDPOINTS['text_raw']['html'] = '/html/HTMLGetRawText'
     ENDPOINTS['title'] = {}
-    ENDPOINTS['title']['url']  = '/url/URLGetTitle'
+    ENDPOINTS['title']['url'] = '/url/URLGetTitle'
     ENDPOINTS['title']['html'] = '/html/HTMLGetTitle'
     ENDPOINTS['feeds'] = {}
-    ENDPOINTS['feeds']['url']  = '/url/URLGetFeedLinks'
+    ENDPOINTS['feeds']['url'] = '/url/URLGetFeedLinks'
     ENDPOINTS['feeds']['html'] = '/html/HTMLGetFeedLinks'
     ENDPOINTS['microformats'] = {}
-    ENDPOINTS['microformats']['url']  = '/url/URLGetMicroformatData'
+    ENDPOINTS['microformats']['url'] = '/url/URLGetMicroformatData'
     ENDPOINTS['microformats']['html'] = '/html/HTMLGetMicroformatData'
     ENDPOINTS['combined'] = {}
     ENDPOINTS['combined']['url'] = '/url/URLGetCombinedData'
@@ -129,7 +129,7 @@ class AlchemyAPI:
     ENDPOINTS['taxonomy']['html'] = '/html/HTMLGetRankedTaxonomy'
     ENDPOINTS['taxonomy']['text'] = '/text/TextGetRankedTaxonomy'
 
-    #The base URL for all endpoints
+    # The base URL for all endpoints
     BASE_URL = 'http://access.alchemyapi.com/calls'
 
     s = requests.Session()
@@ -182,15 +182,13 @@ class AlchemyAPI:
         The response, already converted from JSON to a Python object.
         """
 
-        #Make sure this request supports this flavor
+        # Make sure this request supports this flavor
         if flavor not in AlchemyAPI.ENDPOINTS['entities']:
-            return { 'status':'ERROR', 'statusInfo':'entity extraction for ' + flavor + ' not available' }
+            return {'status': 'ERROR', 'statusInfo': 'entity extraction for ' + flavor + ' not available'}
 
-        #add the data to the options and analyze
+        # add the data to the options and analyze
         options[flavor] = data
         return self.__analyze(AlchemyAPI.ENDPOINTS['entities'][flavor], {}, options)
-
-
 
     def keywords(self, flavor, data, options={}):
         """
@@ -213,15 +211,13 @@ class AlchemyAPI:
         The response, already converted from JSON to a Python object.
         """
 
-        #Make sure this request supports this flavor
+        # Make sure this request supports this flavor
         if flavor not in AlchemyAPI.ENDPOINTS['keywords']:
-            return { 'status':'ERROR', 'statusInfo':'keyword extraction for ' + flavor + ' not available' }
+            return {'status': 'ERROR', 'statusInfo': 'keyword extraction for ' + flavor + ' not available'}
 
-        #add the data to the options and analyze
+        # add the data to the options and analyze
         options[flavor] = data
         return self.__analyze(AlchemyAPI.ENDPOINTS['keywords'][flavor], {}, options)
-
-
 
     def concepts(self, flavor, data, options={}):
         """
@@ -238,15 +234,13 @@ class AlchemyAPI:
         The response, already converted from JSON to a Python object.
         """
 
-        #Make sure this request supports this flavor
+        # Make sure this request supports this flavor
         if flavor not in AlchemyAPI.ENDPOINTS['concepts']:
-            return { 'status':'ERROR', 'statusInfo':'concept tagging for ' + flavor + ' not available' }
+            return {'status': 'ERROR', 'statusInfo': 'concept tagging for ' + flavor + ' not available'}
 
-        #add the data to the options and analyze
+        # add the data to the options and analyze
         options[flavor] = data
         return self.__analyze(AlchemyAPI.ENDPOINTS['concepts'][flavor], {}, options)
-
-
 
     def sentiment(self, flavor, data, options={}):
         """
@@ -266,15 +260,13 @@ class AlchemyAPI:
         The response, already converted from JSON to a Python object.
         """
 
-        #Make sure this request supports this flavor
+        # Make sure this request supports this flavor
         if flavor not in AlchemyAPI.ENDPOINTS['sentiment']:
-            return { 'status':'ERROR', 'statusInfo':'sentiment analysis for ' + flavor + ' not available' }
+            return {'status': 'ERROR', 'statusInfo': 'sentiment analysis for ' + flavor + ' not available'}
 
-        #add the data to the options and analyze
+        # add the data to the options and analyze
         options[flavor] = data
         return self.__analyze(AlchemyAPI.ENDPOINTS['sentiment'][flavor], {}, options)
-
-
 
     def sentiment_targeted(self, flavor, data, target, options={}):
         """
@@ -295,20 +287,18 @@ class AlchemyAPI:
         The response, already converted from JSON to a Python object.
         """
 
-        #Make sure the target is valid
+        # Make sure the target is valid
         if target is None or target == '':
-            return { 'status':'ERROR', 'statusInfo':'targeted sentiment requires a non-null target' }
+            return {'status': 'ERROR', 'statusInfo': 'targeted sentiment requires a non-null target'}
 
-        #Make sure this request supports this flavor
+        # Make sure this request supports this flavor
         if flavor not in AlchemyAPI.ENDPOINTS['sentiment_targeted']:
-            return { 'status':'ERROR', 'statusInfo':'targeted sentiment analysis for ' + flavor + ' not available' }
+            return {'status': 'ERROR', 'statusInfo': 'targeted sentiment analysis for ' + flavor + ' not available'}
 
-        #add the URL encoded data and target to the options and analyze
+        # add the URL encoded data and target to the options and analyze
         options[flavor] = data
         options['target'] = target
         return self.__analyze(AlchemyAPI.ENDPOINTS['sentiment_targeted'][flavor], {}, options)
-
-
 
     def text(self, flavor, data, options={}):
         """
@@ -329,15 +319,13 @@ class AlchemyAPI:
         The response, already converted from JSON to a Python object.
         """
 
-        #Make sure this request supports this flavor
+        # Make sure this request supports this flavor
         if flavor not in AlchemyAPI.ENDPOINTS['text']:
-            return { 'status':'ERROR', 'statusInfo':'clean text extraction for ' + flavor + ' not available' }
+            return {'status': 'ERROR', 'statusInfo': 'clean text extraction for ' + flavor + ' not available'}
 
-        #add the data to the options and analyze
+        # add the data to the options and analyze
         options[flavor] = data
         return self.__analyze(AlchemyAPI.ENDPOINTS['text'][flavor], options)
-
-
 
     def text_raw(self, flavor, data, options={}):
         """
@@ -357,15 +345,13 @@ class AlchemyAPI:
         The response, already converted from JSON to a Python object.
         """
 
-        #Make sure this request supports this flavor
+        # Make sure this request supports this flavor
         if flavor not in AlchemyAPI.ENDPOINTS['text_raw']:
-            return { 'status':'ERROR', 'statusInfo':'raw text extraction for ' + flavor + ' not available' }
+            return {'status': 'ERROR', 'statusInfo': 'raw text extraction for ' + flavor + ' not available'}
 
-        #add the data to the options and analyze
+        # add the data to the options and analyze
         options[flavor] = data
         return self.__analyze(AlchemyAPI.ENDPOINTS['text_raw'][flavor], {}, options)
-
-
 
     def author(self, flavor, data, options={}):
         """
@@ -385,15 +371,13 @@ class AlchemyAPI:
         The response, already converted from JSON to a Python object.
         """
 
-        #Make sure this request supports this flavor
+        # Make sure this request supports this flavor
         if flavor not in AlchemyAPI.ENDPOINTS['author']:
-            return { 'status':'ERROR', 'statusInfo':'author extraction for ' + flavor + ' not available' }
+            return {'status': 'ERROR', 'statusInfo': 'author extraction for ' + flavor + ' not available'}
 
-        #add the data to the options and analyze
+        # add the data to the options and analyze
         options[flavor] = data
         return self.__analyze(AlchemyAPI.ENDPOINTS['author'][flavor], {}, options)
-
-
 
     def language(self, flavor, data, options={}):
         """
@@ -413,15 +397,13 @@ class AlchemyAPI:
         The response, already converted from JSON to a Python object.
         """
 
-        #Make sure this request supports this flavor
+        # Make sure this request supports this flavor
         if flavor not in AlchemyAPI.ENDPOINTS['language']:
-            return { 'status':'ERROR', 'statusInfo':'language detection for ' + flavor + ' not available' }
+            return {'status': 'ERROR', 'statusInfo': 'language detection for ' + flavor + ' not available'}
 
-        #add the data to the options and analyze
+        # add the data to the options and analyze
         options[flavor] = data
         return self.__analyze(AlchemyAPI.ENDPOINTS['language'][flavor], {}, options)
-
-
 
     def title(self, flavor, data, options={}):
         """
@@ -441,15 +423,13 @@ class AlchemyAPI:
         The response, already converted from JSON to a Python object.
         """
 
-        #Make sure this request supports this flavor
+        # Make sure this request supports this flavor
         if flavor not in AlchemyAPI.ENDPOINTS['title']:
-            return { 'status':'ERROR', 'statusInfo':'title extraction for ' + flavor + ' not available' }
+            return {'status': 'ERROR', 'statusInfo': 'title extraction for ' + flavor + ' not available'}
 
-        #add the data to the options and analyze
+        # add the data to the options and analyze
         options[flavor] = data
         return self.__analyze(AlchemyAPI.ENDPOINTS['title'][flavor], {}, options)
-
-
 
     def relations(self, flavor, data, options={}):
         """
@@ -478,15 +458,13 @@ class AlchemyAPI:
         The response, already converted from JSON to a Python object.
         """
 
-        #Make sure this request supports this flavor
+        # Make sure this request supports this flavor
         if flavor not in AlchemyAPI.ENDPOINTS['relations']:
-            return { 'status':'ERROR', 'statusInfo':'relation extraction for ' + flavor + ' not available' }
+            return {'status': 'ERROR', 'statusInfo': 'relation extraction for ' + flavor + ' not available'}
 
-        #add the data to the options and analyze
+        # add the data to the options and analyze
         options[flavor] = data
         return self.__analyze(AlchemyAPI.ENDPOINTS['relations'][flavor], {}, options)
-
-
 
     def category(self, flavor, data, options={}):
         """
@@ -506,16 +484,14 @@ class AlchemyAPI:
         The response, already converted from JSON to a Python object.
         """
 
-        #Make sure this request supports this flavor
+        # Make sure this request supports this flavor
         if flavor not in AlchemyAPI.ENDPOINTS['category']:
-            return { 'status':'ERROR', 'statusInfo':'text categorization for ' + flavor + ' not available' }
+            return {'status': 'ERROR', 'statusInfo': 'text categorization for ' + flavor + ' not available'}
 
-        #add the data to the options and analyze
+        # add the data to the options and analyze
         options[flavor] = data
 
         return self.__analyze(AlchemyAPI.ENDPOINTS['category'][flavor], {}, options)
-
-
 
     def feeds(self, flavor, data, options={}):
         """
@@ -535,15 +511,13 @@ class AlchemyAPI:
         The response, already converted from JSON to a Python object.
         """
 
-        #Make sure this request supports this flavor
+        # Make sure this request supports this flavor
         if flavor not in AlchemyAPI.ENDPOINTS['feeds']:
-            return { 'status':'ERROR', 'statusInfo':'feed detection for ' + flavor + ' not available' }
+            return {'status': 'ERROR', 'statusInfo': 'feed detection for ' + flavor + ' not available'}
 
-        #add the data to the options and analyze
+        # add the data to the options and analyze
         options[flavor] = data
         return self.__analyze(AlchemyAPI.ENDPOINTS['feeds'][flavor], {}, options)
-
-
 
     def microformats(self, flavor, data, options={}):
         """
@@ -563,11 +537,11 @@ class AlchemyAPI:
         The response, already converted from JSON to a Python object.
         """
 
-        #Make sure this request supports this flavor
+        # Make sure this request supports this flavor
         if flavor not in AlchemyAPI.ENDPOINTS['microformats']:
-            return { 'status':'ERROR', 'statusInfo':'microformat extraction for ' + flavor + ' not available' }
+            return {'status': 'ERROR', 'statusInfo': 'microformat extraction for ' + flavor + ' not available'}
 
-        #add the data to the options and analyze
+        # add the data to the options and analyze
         options[flavor] = data
         return self.__analyze(AlchemyAPI.ENDPOINTS['microformats'][flavor], {}, options)
 
@@ -589,7 +563,7 @@ class AlchemyAPI:
         The response, already converted from JSON to a Python object.
         """
         if flavor not in AlchemyAPI.ENDPOINTS['image']:
-            return { 'status':'ERROR', 'statusInfo':'image extraction for ' + flavor + ' not available' }
+            return {'status': 'ERROR', 'statusInfo': 'image extraction for ' + flavor + ' not available'}
         options[flavor] = data
         return self.__analyze(AlchemyAPI.ENDPOINTS['image'][flavor], {}, options)
 
@@ -640,7 +614,7 @@ class AlchemyAPI:
 
         """
         if flavor not in AlchemyAPI.ENDPOINTS['taxonomy']:
-            return { 'status':'ERROR', 'statusInfo':'taxonomy for ' + flavor + ' not available' }
+            return {'status': 'ERROR', 'statusInfo': 'taxonomy for ' + flavor + ' not available'}
         options[flavor] = data
         return self.__analyze(AlchemyAPI.ENDPOINTS['taxonomy'][flavor], {}, options)
 
@@ -706,7 +680,7 @@ class AlchemyAPI:
         The response, already converted from JSON to a Python object.
         """
         if flavor not in AlchemyAPI.ENDPOINTS['combined']:
-            return { 'status':'ERROR', 'statusInfo':'combined for ' + flavor + ' not available' }
+            return {'status': 'ERROR', 'statusInfo': 'combined for ' + flavor + ' not available'}
         options[flavor] = data
         return self.__analyze(AlchemyAPI.ENDPOINTS['combined'][flavor], {}, options)
 
@@ -719,7 +693,7 @@ class AlchemyAPI:
         options -> various parameters that can be used to adjust how the API works, see below for more info on the available options.
         """
         if flavor not in AlchemyAPI.ENDPOINTS['imagetagging']:
-            return { 'status':'ERROR', 'statusInfo':'imagetagging for ' + flavor + ' not available' }
+            return {'status': 'ERROR', 'statusInfo': 'imagetagging for ' + flavor + ' not available'}
         elif 'image' == flavor:
             image = open(data, 'rb').read()
             options['imagePostMode'] = 'raw'
@@ -727,7 +701,6 @@ class AlchemyAPI:
 
         options[flavor] = data
         return self.__analyze(AlchemyAPI.ENDPOINTS['imagetagging'][flavor], {}, options)
-
 
     def __analyze(self, endpoint, params, post_data=bytearray()):
         """
@@ -741,17 +714,16 @@ class AlchemyAPI:
         The response, already converted from JSON to a Python object.
         """
 
-        #Add the API Key and set the output mode to JSON
-        params['apikey'] = self.apikey;
-        params['outputMode'] = 'json';
-        #Insert the base url
+        # Add the API Key and set the output mode to JSON
+        params['apikey'] = self.apikey
+        params['outputMode'] = 'json'
+        # Insert the base url
 
-        post_url = AlchemyAPI.BASE_URL + endpoint + '?' + urlencode(params).encode('utf-8');
+        post_url = AlchemyAPI.BASE_URL + endpoint + '?' + urlencode(params).encode('utf-8')
 
         try:
             results = self.s.post(url=post_url, data=post_data)
             return results.json()
         except Exception as e:
             print(e)
-            return { 'status':'ERROR', 'statusInfo':'network-error' }
-
+            return {'status': 'ERROR', 'statusInfo': 'network-error'}
