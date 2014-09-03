@@ -128,6 +128,8 @@ class AlchemyAPI:
     ENDPOINTS['taxonomy']['url'] = '/url/URLGetRankedTaxonomy'
     ENDPOINTS['taxonomy']['html'] = '/html/HTMLGetRankedTaxonomy'
     ENDPOINTS['taxonomy']['text'] = '/text/TextGetRankedTaxonomy'
+    ENDPOINTS['apikeyinfo'] = {}
+    ENDPOINTS['apikeyinfo']['info'] = '/info/GetAPIKeyInfo'
 
     # The base URL for all endpoints
     BASE_URL = 'http://access.alchemyapi.com/calls'
@@ -701,6 +703,17 @@ class AlchemyAPI:
 
         options[flavor] = data
         return self.__analyze(AlchemyAPI.ENDPOINTS['imagetagging'][flavor], {}, options)
+
+    def apikeyinfo(self):
+        """
+        Gets information about an API Key, including the daily transaction limit and
+        consumed transactions.
+
+        OUTPUT:
+        The response, already converted from JSON to a Python object.
+        """
+
+        return self.__analyze(AlchemyAPI.ENDPOINTS['apikeyinfo']['info'], {})
 
     def __analyze(self, endpoint, params, post_data=bytearray()):
         """
